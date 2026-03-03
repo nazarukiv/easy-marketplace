@@ -1,19 +1,35 @@
 package com.nazarukiv.easymarket.models;
 
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+
+@Entity
+@Table(name = "products")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
-    private String title;
-    private String description;
-    private String city;
-    private int price;
-    private String author; //for now, later will be changed for model.
 
-    public Product() {
-    }
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "description", columnDefinition = "text")
+    private String description;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "price")
+    private int price;
+
+    @Column(name = "author")
+    private String author; //for now, later will be changed for model.
 }

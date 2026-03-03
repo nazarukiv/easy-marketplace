@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+out/
+.DS_Store
+*.log
+.env
+.env.*
+application-local.properties
+application.properties
