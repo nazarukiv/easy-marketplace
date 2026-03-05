@@ -5,7 +5,11 @@
 </head>
 
 <body>
-<h1>EasyMarket</h1><hr>
+<h1>EasyMarket | <a href="/login">Login</a></h1><hr>
+<form action="/logout" method="post">
+    <input type="hidden" name="_csrf" value="${_csrf.token}">
+    <input type="submit" value="Log out"/>
+</form>
 <h4>Products</h4>
 
 <form action="/" method="get">
