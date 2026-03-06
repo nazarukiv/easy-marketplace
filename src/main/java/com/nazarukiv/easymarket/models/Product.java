@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.util.Lazy;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,13 +35,15 @@ public class Product {
     @Column(name = "price")
     private int price;
 
-    @Column(name = "author")
-    private String author; //for now, later will be changed for model.
-
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     private List<Image> images = new ArrayList<>();
     private  Long previewImageId;
+
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn
+    private User user;
+
     private LocalDateTime dateCreated; //to know when specific product was created
 
 

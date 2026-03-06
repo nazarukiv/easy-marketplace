@@ -26,12 +26,9 @@
     <b>Description: </b> ${product.description}<br>
     <b>City: </b> ${product.city}<br>
     <b>Price: </b> ${product.price}<br>
-    <b>Author: </b> ${product.author}<br>
+    <b>Author: </b> ${product.user.name}<br>
+    <b>Author phone number: </b> ${product.user.phoneNumber}<br>
 </#if>
 
-<h3>Create new product</h3>
-<form action="/product/delete/${product.id}" method="post">
-    <input type="submit" value="Delete product"/>
-</form>
 </body>
 </html>
