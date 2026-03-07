@@ -26,8 +26,7 @@
     <b>Description: </b> ${product.description}<br>
     <b>City: </b> ${product.city}<br>
     <b>Price: </b> ${product.price}<br>
-    <b>Author: </b> ${product.user.name}<br>
-    <b>Author phone number: </b> ${product.user.phoneNumber}<br>
+    <b>Author:</b> <a href="/user/${product.user.id}">${product.user.name}</a><br>
 </#if>
 
 </body>

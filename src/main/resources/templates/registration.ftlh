@@ -20,7 +20,7 @@
 
 </form>
 <#if errorMessage??>
-    <h2 style="color: red">{errorMessage}</h2>
+    <h2 style="color: red">${errorMessage}</h2>
 </#if>
 </body>
 </html>

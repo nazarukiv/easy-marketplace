@@ -66,6 +66,10 @@ public class User implements UserDetails {
         return roles;
     }
 
+    public boolean isAdmin(){
+        return roles.contains(Roles.ROLE_ADMIN);
+    }
+
     @Override
     public String getUsername() {
         return email;
