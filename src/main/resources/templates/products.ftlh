@@ -2,56 +2,141 @@
 <html>
 <head>
     <title>EasyMarket</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
-<h1>EasyMarket</h1><hr>
-<#if user?? && user.email??>
-    <h3>user name: <i>${user.name}</i></h3>
-    <form action="/logout" method="post">
-        <input type="hidden" name="_csrf" value="${_csrf.token}">
-        <input type="submit" value="Log out"/>
-    </form>
-<#else>
-<a href="/login">Login</a>
-</#if>
 
-<hr>
-<h4>Products</h4>
+<div class="wrapper">
 
-<form action="/" method="get">
-    Search by title:
-    <input type="text" name="title"><br>
-    <input type="submit" value="Search">
-</form>
+    <div class="header">
+        <h1>EasyMarket</h1>
 
+        <div class="nav">
+            <a href="/">Home</a>
 
-<#list products as product>
-    <div>
-        <p>
-            <b>${product.title}</b>
-            ${product.price} £ |
-            <a href="/product/${product.id}">More info...</a>
-        </p>
+            <#if user?? && user.email??>
+                <a href="/user/${user.id}">Profile</a>
+
+                <form action="/logout" method="post" class="inline-form">
+                    <input type="hidden" name="_csrf" value="${_csrf.token}">
+                    <input type="submit" value="Logout">
+                </form>
+
+            <#else>
+                <a href="/login">Login</a>
+                <a href="/registration">Register</a>
+            </#if>
+
+        </div>
     </div>
-<#else>
-    <h3>No products found</h3>
-</#list>
-<#if user.email??>
-    <hr>
-    <h3>Create new product</h3>
-    <form action="/product/create" method="post" enctype="multipart/form-data">
-        Title: <input type="text" name="title"/><br><br>
-        Description: <input type="text" name="description"/><br><br>
-        City: <input type="text" name="city"/><br><br>
-        Price: <input type="number" name="price"/><br><br>
-        First photo: <input type="file" name="file1"><br><br>
-        Second photo: <input type="file" name="file2"><br><br>
-        Third photo: <input type="file" name="file3">
-        <input type="hidden" name="_csrf" value="${_csrf.token}">
-        <input type="submit" value="Add product"/>
+
+
+    <h3>Search</h3>
+
+    <form action="/" method="get">
+
+        <div class="field">
+            <span class="label">Title</span>
+            <input type="text" name="title">
+        </div>
+
+        <input type="submit" value="Search">
+
     </form>
-</#if>
+
+
+    <h3>Products</h3>
+
+    <#list products as product>
+
+        <div class="product">
+
+            <div class="product-title">
+                ${product.title}
+            </div>
+
+            <#if product.previewImageId??>
+                <img src="/images/${product.previewImageId}">
+            </#if>
+
+            <div class="meta">
+                <strong>Price</strong> £${product.price}
+            </div>
+
+            <div class="meta">
+                <strong>City</strong> ${product.city}
+            </div>
+
+            <div class="meta">
+                <a href="/product/${product.id}">Open product</a>
+            </div>
+
+        </div>
+
+    <#else>
+
+        <div class="notice">
+            No products
+        </div>
+
+    </#list>
+
+
+    <#if user.email??>
+
+        <div class="form-block">
+
+            <h3>Create product</h3>
+
+            <form action="/product/create" method="post" enctype="multipart/form-data">
+
+                <div class="field">
+                    <span class="label">Title</span>
+                    <input type="text" name="title">
+                </div>
+
+                <div class="field">
+                    <span class="label">Description</span>
+                    <input type="text" name="description">
+                </div>
+
+                <div class="field">
+                    <span class="label">City</span>
+                    <input type="text" name="city">
+                </div>
+
+                <div class="field">
+                    <span class="label">Price</span>
+                    <input type="number" name="price">
+                </div>
+
+                <div class="field">
+                    <span class="label">Photo 1</span>
+                    <input type="file" name="file1">
+                </div>
+
+                <div class="field">
+                    <span class="label">Photo 2</span>
+                    <input type="file" name="file2">
+                </div>
+
+                <div class="field">
+                    <span class="label">Photo 3</span>
+                    <input type="file" name="file3">
+                </div>
+
+                <input type="hidden" name="_csrf" value="${_csrf.token}">
+
+                <input type="submit" value="Add product">
+
+            </form>
+
+        </div>
+
+    </#if>
+
+</div>
 
 </body>
 </html>

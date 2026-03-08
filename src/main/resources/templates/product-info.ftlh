@@ -1,33 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>
-        EasyMarket
-    </title>
+    <title>EasyMarket</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
-<h1>EasyMarket</h1><hr>
-<h4>Detailed information about product:</h4>
-<#if product??>
-    <#if product.images?size gt 0>
-        <img src="/images/${product.images[0].id}" height="60px"><br><br>
+
+<div class="wrapper">
+
+    <div class="header">
+        <h1>EasyMarket</h1>
+        <div class="nav">
+            <a href="/">Home</a>
+        </div>
+    </div>
+
+    <#if product??>
+
+        <h2>${product.title}</h2>
+
+        <#if product.images?size gt 0>
+            <img src="/images/${product.images[0].id}">
+        </#if>
+
+        <p>
+            Price: £${product.price}
+        </p>
+
+        <p>
+            City: ${product.city}
+        </p>
+
+        <p>
+            ${product.description}
+        </p>
+
+        <p>
+            Seller:
+            <a href="/user/${product.user.id}">
+                ${product.user.name}
+            </a>
+        </p>
+
     </#if>
 
-    <#if product.images?size gt 1>
-        <img src="/images/${product.images[1].id}" height="60px"><br><br>
-    </#if>
-
-    <#if product.images?size gt 2>
-        <img src="/images/${product.images[2].id}" height="60px"><br><br>
-    </#if>
-
-    <b>Title: </b> ${product.title}<br>
-    <b>Description: </b> ${product.description}<br>
-    <b>City: </b> ${product.city}<br>
-    <b>Price: </b> ${product.price}<br>
-    <b>Author:</b> <a href="/user/${product.user.id}">${product.user.name}</a><br>
-</#if>
+</div>
 
 </body>
 </html>

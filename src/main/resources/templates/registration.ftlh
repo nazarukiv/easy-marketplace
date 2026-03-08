@@ -2,25 +2,58 @@
 <html>
 <head>
     <title>EasyMarket</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
-<h1>EasyMarket</h1><hr>
-<h4>Registration</h4>
 
-<form action="/registration" method="post">
+<div class="wrapper">
 
-    Username: <input type="text" name="name"><br><br>
-    Email: <input type="text" name="email"><br><br>
-    Phone number: <input type="text" name="phoneNumber"><br><br>
-    Password: <input type="password" name="password"><br><br>
+    <div class="header">
+        <h1>EasyMarket</h1>
+        <div class="nav">
+            <a href="/">Home</a>
+            <a href="/login">Login</a>
+        </div>
+    </div>
 
-    <input type="hidden" name="_csrf" value="${_csrf.token}">
-    <input type="submit" value="Register">
+    <h3>Create account</h3>
 
-</form>
-<#if errorMessage??>
-    <h2 style="color: red">${errorMessage}</h2>
-</#if>
+    <form action="/registration" method="post">
+
+        <div class="field">
+            <span class="label">Username</span>
+            <input type="text" name="name">
+        </div>
+
+        <div class="field">
+            <span class="label">Email</span>
+            <input type="text" name="email">
+        </div>
+
+        <div class="field">
+            <span class="label">Phone number</span>
+            <input type="text" name="phoneNumber">
+        </div>
+
+        <div class="field">
+            <span class="label">Password</span>
+            <input type="password" name="password">
+        </div>
+
+        <input type="hidden" name="_csrf" value="${_csrf.token}">
+
+        <input type="submit" value="Register">
+
+    </form>
+
+    <#if errorMessage??>
+        <div class="notice">
+            ${errorMessage}
+        </div>
+    </#if>
+
+</div>
+
 </body>
 </html>

@@ -2,29 +2,67 @@
 <html>
 <head>
     <title>EasyMarket</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
-<h1>EasyMarket</h1><hr>
-<h3>User Details ${user.name}</h3>
-<b>Phone number: </b> ${user.phoneNumber}
-<b>Email: </b> ${user.email}
 
-<h4>User products ${user.name} </h4>
-<#list products as product>
-    <div>
-        <p>
-            <b>${product.title}</b>
-            ${product.price} £ |
-            <a href="/product/${product.id}">More info...</a>
-        </p>
+<div class="wrapper">
+
+    <div class="header">
+        <h1>EasyMarket</h1>
+        <div class="nav">
+            <a href="/">Home</a>
+        </div>
     </div>
-    <#else>
-    <h3>No products</h3>
-</#list>
 
-<#if errorMessage??>
-    <h2 style="color: red">{errorMessage}</h2>
-</#if>
+    <h3>User profile</h3>
+
+    <div class="meta">
+        <strong>Name</strong> ${user.name}
+    </div>
+
+    <div class="meta">
+        <strong>Email</strong> ${user.email}
+    </div>
+
+    <div class="meta">
+        <strong>Phone</strong> ${user.phoneNumber}
+    </div>
+
+    <h3>Products</h3>
+
+    <#list products as product>
+
+        <div class="product">
+
+            <div class="product-title">
+                ${product.title}
+            </div>
+
+            <#if product.previewImageId??>
+                <img src="/images/${product.previewImageId}">
+            </#if>
+
+            <div class="meta">
+                <strong>Price</strong> £${product.price}
+            </div>
+
+            <div class="meta">
+                <a href="/product/${product.id}">Open product</a>
+            </div>
+
+        </div>
+
+    <#else>
+
+        <div class="notice">
+            No products
+        </div>
+
+    </#list>
+
+</div>
+
 </body>
 </html>

@@ -1,0 +1,223 @@
+body{
+    background:#e9e9e9;
+    color:#111;
+    font-family: "Courier New", monospace;
+    font-size:18px;
+    line-height:1.4;
+    margin:0;
+    padding:24px 0;
+}
+
+.wrapper{
+    width:920px;
+    margin:0 auto;
+    background:#ffffff;
+    border:2px solid #111;
+    padding:20px 24px 28px 24px;
+    box-sizing:border-box;
+}
+
+.header{
+    border-bottom:2px solid #111;
+    margin-bottom:24px;
+    padding-bottom:12px;
+}
+
+.header h1{
+    margin:0;
+    font-size:42px;
+    line-height:1;
+    letter-spacing:1px;
+}
+
+.nav{
+    margin-top:12px;
+    font-size:17px;
+}
+
+.nav a{
+    display:inline-block;
+    margin-right:14px;
+    color:#111;
+    text-decoration:none;
+}
+
+.nav a:hover{
+    text-decoration:underline;
+}
+
+h2{
+    font-size:32px;
+    margin:0 0 16px 0;
+}
+
+h3{
+    font-size:26px;
+    margin:0 0 16px 0;
+}
+
+h4{
+    font-size:22px;
+    margin:0 0 14px 0;
+}
+
+p{
+    margin:0 0 14px 0;
+}
+
+form{
+    margin:0;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"]{
+    width:320px;
+    padding:8px 10px;
+    border:1px solid #111;
+    font-family: inherit;
+    font-size:16px;
+    box-sizing:border-box;
+    background:#fff;
+}
+
+input[type="file"]{
+    font-family: inherit;
+    font-size:15px;
+}
+
+input[type="submit"],
+button{
+    background:#efefef;
+    color:#111;
+    border:1px solid #111;
+    padding:7px 14px;
+    font-family: inherit;
+    font-size:16px;
+    cursor:pointer;
+}
+
+input[type="submit"]:hover,
+button:hover{
+    background:#dcdcdc;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:12px;
+    font-size:16px;
+}
+
+th,
+td{
+    border:1px solid #111;
+    padding:10px 12px;
+    text-align:left;
+    vertical-align:top;
+}
+
+th{
+    background:#efefef;
+    font-size:15px;
+}
+
+.product{
+    border:1px solid #111;
+    padding:14px;
+    margin-bottom:14px;
+    background:#fcfcfc;
+    display:flex;
+    gap:18px;
+    align-items:flex-start;
+}
+
+.product img{
+    width:160px;
+    height:auto;
+    border:1px solid #111;
+}
+
+.product-title{
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.meta{
+    margin-bottom:6px;
+}
+
+.form-block{
+    border-top:2px solid #111;
+    margin-top:28px;
+    padding-top:20px;
+}
+
+.label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+.field{
+    margin-bottom:16px;
+}
+
+.notice{
+    margin:14px 0;
+    padding:10px 12px;
+    border:1px solid #111;
+    background:#f3f3f3;
+}
+
+.error{
+    color:#8a0000;
+    font-weight:bold;
+    margin-top:14px;
+}
+
+.inline-form{
+    display:inline;
+}
+
+.meta{
+    margin-bottom:10px;
+}
+
+.meta strong{
+    display:inline-block;
+    min-width:80px;
+}
+
+.user-box{
+    border:1px solid #111;
+    padding:16px;
+    background:#fcfcfc;
+}
+
+.simple-list-item{
+    border-bottom:1px solid #111;
+    padding:10px 0;
+}
+
+.simple-list-item:last-child{
+    border-bottom:none;
+}
+
+
+.admin-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.admin-table th{
+    text-align:left;
+    border-bottom:1px solid black;
+    padding:6px;
+}
+
+.admin-table td{
+    padding:6px;
+    border-bottom:1px solid #ccc;
+}
