@@ -221,3 +221,39 @@ th{
     padding:6px;
     border-bottom:1px solid #ccc;
 }
+
+.slider{
+    position:relative;
+    width:160px;
+    height:160px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.slider img{
+    width:160px;
+    height:auto;
+    display:block;
+}
+
+.slider button{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:26px;
+    height:26px;
+    padding:0;
+    font-size:14px;
+    background:#efefef;
+    border:1px solid #111;
+    cursor:pointer;
+}
+
+.slider button:first-child{
+    left:-32px;
+}
+
+.slider button:last-child{
+    right:-32px;
+}

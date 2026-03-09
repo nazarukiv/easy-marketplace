@@ -30,17 +30,22 @@ public class ProductController {
     public String products(@RequestParam(name = "title", required = false) String title,
                            @RequestParam(name = "page", defaultValue = "0") int page,
                            @RequestParam(name = "sort", defaultValue = "id") String sortField,
+                           @RequestParam(name = "minPrice", required = false) Integer minPrice,
+                           @RequestParam(name = "maxPrice", required = false) Integer maxPrice,
                            Principal principal,
                            Model model) {
 
         Pageable pageable = PageRequest.of(page, 3, Sort.by(sortField));
-        Page<Product> productPage = productService.listProducts(title, pageable);
+        Page<Product> productPage =
+                productService.listProducts(title, minPrice, maxPrice, pageable);
 
         model.addAttribute("products", productPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productPage.getTotalPages());
         model.addAttribute("sortField", sortField);
         model.addAttribute("title", title);
+        model.addAttribute("minPrice", minPrice);
+        model.addAttribute("maxPrice", maxPrice);
         model.addAttribute("user", productService.getUserByPrincipal(principal));
 
         return "products";

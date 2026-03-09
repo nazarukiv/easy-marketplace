@@ -21,7 +21,26 @@
         <h2>${product.title}</h2>
 
         <#if product.images?size gt 0>
-            <img src="/images/${product.images[0].id}">
+
+            <div class="gallery">
+
+                <img id="mainImage" src="/images/${product.images[0].id}" width="350">
+
+                <div style="margin-top:10px;">
+
+                    <#list product.images as img>
+
+                        <img src="/images/${img.id}"
+                             width="70"
+                             style="margin-right:6px; cursor:pointer;"
+                             onclick="changeImage('/images/${img.id}')">
+
+                    </#list>
+
+                </div>
+
+            </div>
+
         </#if>
 
         <p>
@@ -46,6 +65,14 @@
     </#if>
 
 </div>
+
+<script>
+
+    function changeImage(src){
+        document.getElementById("mainImage").src = src;
+    }
+
+</script>
 
 </body>
 </html>

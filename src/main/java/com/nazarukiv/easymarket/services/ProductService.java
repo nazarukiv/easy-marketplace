@@ -27,11 +27,22 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
-    public Page<Product> listProducts(String title, Pageable pageable){
-        if (title != null && !title.isEmpty()){
-            return productRepository.findByTitleContainingIgnoreCase(title, pageable);
-        }
-        return productRepository.findAll(pageable);
+    public Page<Product> listProducts(String title,
+                                      Integer minPrice,
+                                      Integer maxPrice,
+                                      Pageable pageable){
+
+        String searchTitle = title == null ? "" : title;
+
+        int min = minPrice == null ? 0 : minPrice;
+        int max = maxPrice == null ? Integer.MAX_VALUE : maxPrice;
+
+        return productRepository.findByTitleContainingIgnoreCaseAndPriceBetween(
+                searchTitle,
+                min,
+                max,
+                pageable
+        );
     }
 
     public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3)throws IOException
@@ -93,4 +104,6 @@ public class ProductService {
     public @Nullable Object getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
     }
+
+
 }

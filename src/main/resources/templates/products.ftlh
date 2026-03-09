@@ -38,7 +38,17 @@
 
         <div class="field">
             <span class="label">Title</span>
-            <input type="text" name="title">
+            <input type="text" name="title" value="${title!}">
+        </div>
+
+        <div class="field">
+            <span class="label">Min price</span>
+            <input type="number" name="minPrice" value="${minPrice!}">
+        </div>
+
+        <div class="field">
+            <span class="label">Max price</span>
+            <input type="number" name="maxPrice" value="${maxPrice!}">
         </div>
 
         <input type="submit" value="Search">
@@ -56,9 +66,33 @@
                 ${product.title}
             </div>
 
-            <#if product.previewImageId??>
-                <img src="/images/${product.previewImageId}">
+            <#if product.images?size gt 0>
+
+                <div class="slider">
+
+                    <button class="left" onclick="prevImage(${product.id})">&lt;</button>
+
+                    <div class="slider-image">
+                        <img id="img-${product.id}" src="/images/${product.images[0].id}">
+                    </div>
+
+                    <button class="right" onclick="nextImage(${product.id})">&gt;</button>
+
+                </div>
+
             </#if>
+
+            <script>
+
+                window['images${product.id}'] = [
+                    <#list product.images as img>
+                    "/images/${img.id}"<#if img_has_next>,</#if>
+                    </#list>
+                ];
+
+                window['index${product.id}'] = 0;
+
+            </script>
 
             <div class="meta">
                 <strong>Price</strong> £${product.price}
@@ -160,6 +194,42 @@
     </#if>
 
 </div>
+
+<script>
+
+    function nextImage(productId){
+
+        let images = window['images' + productId];
+        let index = window['index' + productId];
+
+        index++;
+
+        if(index >= images.length){
+            index = 0;
+        }
+
+        window['index' + productId] = index;
+
+        document.getElementById("img-" + productId).src = images[index];
+    }
+
+    function prevImage(productId){
+
+        let images = window['images' + productId];
+        let index = window['index' + productId];
+
+        index--;
+
+        if(index < 0){
+            index = images.length - 1;
+        }
+
+        window['index' + productId] = index;
+
+        document.getElementById("img-" + productId).src = images[index];
+    }
+
+</script>
 
 </body>
 </html>
