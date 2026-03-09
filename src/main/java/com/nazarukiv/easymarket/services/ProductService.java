@@ -16,6 +16,10 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -23,11 +27,11 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
-    public List<Product> listProducts(String title){
+    public Page<Product> listProducts(String title, Pageable pageable){
         if (title != null && !title.isEmpty()){
-            return productRepository.findByTitle(title);
+            return productRepository.findByTitleContainingIgnoreCase(title, pageable);
         }
-        return productRepository.findAll();
+        return productRepository.findAll(pageable);
     }
 
     public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3)throws IOException

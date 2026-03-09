@@ -15,6 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.Principal;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 @Controller
 @RequiredArgsConstructor
 public class ProductController {
@@ -22,9 +27,22 @@ public class ProductController {
 
 
     @GetMapping("/")
-    public String products(@RequestParam(name = "title", required = false) String title,Principal principal, Model model){
-        model.addAttribute("products", productService.listProducts(title));
+    public String products(@RequestParam(name = "title", required = false) String title,
+                           @RequestParam(name = "page", defaultValue = "0") int page,
+                           @RequestParam(name = "sort", defaultValue = "id") String sortField,
+                           Principal principal,
+                           Model model) {
+
+        Pageable pageable = PageRequest.of(page, 3, Sort.by(sortField));
+        Page<Product> productPage = productService.listProducts(title, pageable);
+
+        model.addAttribute("products", productPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productPage.getTotalPages());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("title", title);
         model.addAttribute("user", productService.getUserByPrincipal(principal));
+
         return "products";
     }
 

@@ -82,6 +82,29 @@
 
     </#list>
 
+    <div style="margin-top:20px;">
+
+        <#if totalPages?? && totalPages gt 1>
+
+            <#list 0..(totalPages-1) as i>
+
+                <a href="/?page=${i}&sort=${sortField}<#if title??>&title=${title}</#if>"
+                   style="margin-right:8px;">
+
+                    <#if i == currentPage>
+                        <strong>${i + 1}</strong>
+                    <#else>
+                        ${i + 1}
+                    </#if>
+
+                </a>
+
+            </#list>
+
+        </#if>
+
+    </div>
+
 
     <#if user.email??>
 
