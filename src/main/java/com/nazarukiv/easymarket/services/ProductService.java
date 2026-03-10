@@ -97,12 +97,33 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id){
-        productRepository.deleteById(id);
 
+        Product product = productRepository.findById(id).orElse(null);
+
+        if(product != null){
+
+            User user = product.getUser();
+
+            if(user != null){
+                user.getProducts().remove(product);
+            }
+
+            productRepository.delete(product);
+        }
     }
 
-    public @Nullable Object getProductById(Long id) {
+    public Product getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
+    }
+
+
+    public boolean isProductOwner(Long productId, Principal principal){
+        if(principal == null) return false;
+
+        Product product = productRepository.findById(productId).orElse(null);
+        if(product == null) return false;
+
+        return product.getUser().getEmail().equals(principal.getName());
     }
 
 

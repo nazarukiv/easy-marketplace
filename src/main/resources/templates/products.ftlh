@@ -55,6 +55,14 @@
 
     </form>
 
+    <h3>Sort</h3>
+
+    <div class="meta">
+        <a href="/?sort=price">Price ↑</a> |
+        <a href="/?sort=price,desc">Price ↓</a> |
+        <a href="/?sort=dateCreated,desc">Newest</a>
+    </div>
+
 
     <h3>Products</h3>
 
@@ -103,8 +111,25 @@
             </div>
 
             <div class="meta">
+                <strong>Posted</strong>
+                ${product.dateCreated?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")?string("yyyy-MM-dd HH:mm")}
+            </div>
+
+            <div class="meta">
                 <a href="/product/${product.id}">Open product</a>
             </div>
+
+            <#if user?? && user.id?? && product.user.id == user.id>
+
+                <form action="/product/delete/${product.id}" method="post">
+
+                    <input type="hidden" name="_csrf" value="${_csrf.token}">
+
+                    <input type="submit" value="Delete" class="delete-btn">
+
+                </form>
+
+            </#if>
 
         </div>
 

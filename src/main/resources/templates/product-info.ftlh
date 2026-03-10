@@ -62,6 +62,11 @@
             </a>
         </p>
 
+        <p>
+            Posted:
+            ${product.dateCreated?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")?string("yyyy-MM-dd HH:mm")}
+        </p>
+
     </#if>
 
 </div>

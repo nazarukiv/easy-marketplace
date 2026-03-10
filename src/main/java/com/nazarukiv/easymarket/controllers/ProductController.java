@@ -35,7 +35,17 @@ public class ProductController {
                            Principal principal,
                            Model model) {
 
-        Pageable pageable = PageRequest.of(page, 3, Sort.by(sortField));
+        Sort sort;
+
+        if (sortField.equals("price,desc")) {
+            sort = Sort.by("price").descending();
+        } else if (sortField.equals("dateCreated,desc")) {
+            sort = Sort.by("dateCreated").descending();
+        } else {
+            sort = Sort.by(sortField);
+        }
+
+        Pageable pageable = PageRequest.of(page, 3, sort);
         Page<Product> productPage =
                 productService.listProducts(title, minPrice, maxPrice, pageable);
 
@@ -66,8 +76,14 @@ public class ProductController {
     }
 
     @PostMapping("/product/delete/{id}")
-    public String deleteProduct(@PathVariable Long id){
-        productService.deleteProduct(id);
+    public String deleteProduct(@PathVariable Long id, Principal principal){
+
+        System.out.println("DELETE CLICKED ID = " + id);
+
+        if(productService.isProductOwner(id, principal)){
+            productService.deleteProduct(id);
+        }
+
         return "redirect:/";
     }
 

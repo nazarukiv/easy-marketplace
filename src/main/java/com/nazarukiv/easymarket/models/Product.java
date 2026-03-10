@@ -36,8 +36,15 @@ public class Product {
     private int price;
 
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "product",
+            orphanRemoval = true
+    )
     private List<Image> images = new ArrayList<>();
+
+
     private  Long previewImageId;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
