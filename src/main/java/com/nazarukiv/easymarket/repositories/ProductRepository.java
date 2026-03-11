@@ -9,8 +9,9 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    Page<Product> findByTitleContainingIgnoreCaseAndPriceBetween(
+    Page<Product> findByTitleContainingIgnoreCaseAndCityContainingIgnoreCaseAndPriceBetween(
             String title,
+            String city,
             int minPrice,
             int maxPrice,
             Pageable pageable

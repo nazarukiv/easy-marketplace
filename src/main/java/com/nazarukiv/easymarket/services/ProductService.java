@@ -28,21 +28,25 @@ public class ProductService {
     private final UserRepository userRepository;
 
     public Page<Product> listProducts(String title,
+                                      String city,
                                       Integer minPrice,
                                       Integer maxPrice,
                                       Pageable pageable){
 
         String searchTitle = title == null ? "" : title;
+        String searchCity = city == null ? "" : city;
 
         int min = minPrice == null ? 0 : minPrice;
         int max = maxPrice == null ? Integer.MAX_VALUE : maxPrice;
 
-        return productRepository.findByTitleContainingIgnoreCaseAndPriceBetween(
-                searchTitle,
-                min,
-                max,
-                pageable
-        );
+        return productRepository
+                .findByTitleContainingIgnoreCaseAndCityContainingIgnoreCaseAndPriceBetween(
+                        searchTitle,
+                        searchCity,
+                        min,
+                        max,
+                        pageable
+                );
     }
 
     public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3)throws IOException

@@ -258,3 +258,18 @@ th{
     right:-32px;
 }
 
+.error-box{
+    background:#ffdddd;
+    border:2px solid #ff0000;
+    color:#ff0000;
+    padding:12px;
+    margin-bottom:15px;
+    font-weight:bold;
+    text-transform:uppercase;
+}
+
+.field-error{
+    color:#c40000;
+    font-size:14px;
+    margin-top:4px;
+}

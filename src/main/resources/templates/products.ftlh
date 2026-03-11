@@ -51,6 +51,11 @@
             <input type="number" name="maxPrice" value="${maxPrice!}">
         </div>
 
+        <div class="field">
+            <span class="label">City</span>
+            <input type="text" name="city" value="${city!}">
+        </div>
+
         <input type="submit" value="Search">
 
     </form>
@@ -58,9 +63,10 @@
     <h3>Sort</h3>
 
     <div class="meta">
-        <a href="/?sort=price">Price ↑</a> |
-        <a href="/?sort=price,desc">Price ↓</a> |
-        <a href="/?sort=dateCreated,desc">Newest</a>
+        <a href="/?sort=dateCreated,desc<#if title??>&title=${title}</#if><#if city??>&city=${city}</#if><#if minPrice??>&minPrice=${minPrice}</#if><#if maxPrice??>&maxPrice=${maxPrice}</#if>">Newest</a> |
+        <a href="/?sort=dateCreated,asc<#if title??>&title=${title}</#if><#if city??>&city=${city}</#if><#if minPrice??>&minPrice=${minPrice}</#if><#if maxPrice??>&maxPrice=${maxPrice}</#if>">Oldest</a> |
+        <a href="/?sort=price,asc<#if title??>&title=${title}</#if><#if city??>&city=${city}</#if><#if minPrice??>&minPrice=${minPrice}</#if><#if maxPrice??>&maxPrice=${maxPrice}</#if>">Price ↑</a> |
+        <a href="/?sort=price,desc<#if title??>&title=${title}</#if><#if city??>&city=${city}</#if><#if minPrice??>&minPrice=${minPrice}</#if><#if maxPrice??>&maxPrice=${maxPrice}</#if>">Price ↓</a> |
     </div>
 
 
@@ -147,7 +153,7 @@
 
             <#list 0..(totalPages-1) as i>
 
-                <a href="/?page=${i}&sort=${sortField}<#if title??>&title=${title}</#if>"
+                <a href="/?page=${i}&sort=${sortField}<#if title??>&title=${title}</#if><#if city??>&city=${city}</#if><#if minPrice??>&minPrice=${minPrice}</#if><#if maxPrice??>&maxPrice=${maxPrice}</#if>"
                    style="margin-right:8px;">
 
                     <#if i == currentPage>
@@ -170,6 +176,12 @@
         <div class="form-block">
 
             <h3>Create product</h3>
+
+            <#if errorMessage??>
+                <div class="error-box">
+                    ${errorMessage}
+                </div>
+            </#if>
 
             <form action="/product/create" method="post" enctype="multipart/form-data">
 

@@ -5,11 +5,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.logging.log4j.util.Lazy;
+
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 
 @Entity
@@ -23,15 +26,20 @@ public class Product {
     @Column(name = "id")
     private Long id;
 
+    @NotBlank(message = "Title cannot be empty")
     @Column(name = "title")
     private String title;
 
+    @NotBlank(message = "Description cannot be empty")
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
+    @NotBlank(message = "City cannot be empty")
     @Column(name = "city")
     private String city;
 
+
+    @Min(value = 1, message = "Price must be greater than 0")
     @Column(name = "price")
     private int price;
 
