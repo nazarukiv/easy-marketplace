@@ -62,10 +62,15 @@
             </a>
         </p>
 
+
         <p>
             Posted:
             ${product.dateCreated?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")?string("yyyy-MM-dd HH:mm")}
         </p>
+
+        <form action="/product/delete-confirm/${product.id}" method="get">
+            <button type="submit">Delete product</button>
+        </form>
 
     </#if>
 

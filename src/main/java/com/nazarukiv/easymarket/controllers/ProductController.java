@@ -119,4 +119,17 @@ public class ProductController {
         return "redirect:/";
     }
 
+    @GetMapping("/product/delete-confirm/{id}")
+    public String confirmDelete(@PathVariable Long id, Model model, Principal principal) {
+
+        if (!productService.isProductOwner(id, principal)) {
+            return "redirect:/";
+        }
+
+        Product product = productService.getProductById(id);
+        model.addAttribute("product", product);
+
+        return "delete-confirm";
+    }
+
 }

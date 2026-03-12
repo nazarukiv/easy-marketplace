@@ -125,18 +125,6 @@
                 <a href="/product/${product.id}">Open product</a>
             </div>
 
-            <#if user?? && user.id?? && product.user.id == user.id>
-
-                <form action="/product/delete/${product.id}" method="post">
-
-                    <input type="hidden" name="_csrf" value="${_csrf.token}">
-
-                    <input type="submit" value="Delete" class="delete-btn">
-
-                </form>
-
-            </#if>
-
         </div>
 
     <#else>
