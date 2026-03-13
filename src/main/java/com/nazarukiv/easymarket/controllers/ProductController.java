@@ -83,9 +83,10 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public String productInfo(@PathVariable Long id, Model model){
+    public String productInfo(@PathVariable Long id, Principal principal, Model model){
         model.addAttribute("product", productService.getProductById(id));
-        return  "product-info";
+        model.addAttribute("user", productService.getUserByPrincipal(principal));
+        return "product-info";
     }
 
     @PostMapping("/product/create")
@@ -119,8 +120,8 @@ public class ProductController {
         return "redirect:/";
     }
 
-    @GetMapping("/product/delete-confirm/{id}")
-    public String confirmDelete(@PathVariable Long id, Model model, Principal principal) {
+    @GetMapping("/product/edit/{id}")
+    public String editProductForm(@PathVariable Long id, Principal principal, Model model) {
 
         if (!productService.isProductOwner(id, principal)) {
             return "redirect:/";
@@ -129,7 +130,25 @@ public class ProductController {
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
 
-        return "delete-confirm";
+        return "product-edit";
+    }
+
+
+    @PostMapping("/product/edit/{id}")
+    public String updateProduct(@PathVariable Long id,
+                                @RequestParam("title") String title,
+                                @RequestParam("description") String description,
+                                @RequestParam("city") String city,
+                                @RequestParam("price") int price,
+                                Principal principal) {
+
+        if (!productService.isProductOwner(id, principal)) {
+            return "redirect:/";
+        }
+
+        productService.updateProduct(id, title, description, city, price);
+
+        return "redirect:/product/" + id;
     }
 
 }

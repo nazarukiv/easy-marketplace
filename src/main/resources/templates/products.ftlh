@@ -195,17 +195,20 @@
 
                 <div class="field">
                     <span class="label">Photo 1</span>
-                    <input type="file" name="file1">
+                    <input type="file" name="file1" onchange="previewImage(event,'preview1')">
+                    <img id="preview1" style="max-width:120px;margin-top:5px;display:none;">
                 </div>
 
                 <div class="field">
                     <span class="label">Photo 2</span>
-                    <input type="file" name="file2">
+                    <input type="file" name="file2" onchange="previewImage(event,'preview2')">
+                    <img id="preview2" style="max-width:120px;margin-top:5px;display:none;">
                 </div>
 
                 <div class="field">
                     <span class="label">Photo 3</span>
-                    <input type="file" name="file3">
+                    <input type="file" name="file3" onchange="previewImage(event,'preview3')">
+                    <img id="preview3" style="max-width:120px;margin-top:5px;display:none;">
                 </div>
 
                 <input type="hidden" name="_csrf" value="${_csrf.token}">
@@ -238,6 +241,7 @@
         document.getElementById("img-" + productId).src = images[index];
     }
 
+
     function prevImage(productId){
 
         let images = window['images' + productId];
@@ -252,6 +256,27 @@
         window['index' + productId] = index;
 
         document.getElementById("img-" + productId).src = images[index];
+    }
+
+
+    function previewImage(event, previewId){
+
+        const file = event.target.files[0];
+
+        if(!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+
+            const img = document.getElementById(previewId);
+
+            img.src = e.target.result;
+            img.style.display = "block";
+
+        };
+
+        reader.readAsDataURL(file);
     }
 
 </script>

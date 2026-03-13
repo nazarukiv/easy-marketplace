@@ -129,5 +129,19 @@ public class ProductService {
         return product.getUser().getEmail().equals(principal.getName());
     }
 
+    public void updateProduct(Long id, String title, String description, String city, int price) {
+
+        Product product = productRepository.findById(id).orElse(null);
+
+        if (product != null) {
+            product.setTitle(title);
+            product.setDescription(description);
+            product.setCity(city);
+            product.setPrice(price);
+
+            productRepository.save(product);
+        }
+    }
+
 
 }

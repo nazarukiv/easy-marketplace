@@ -68,9 +68,21 @@
             ${product.dateCreated?datetime("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")?string("yyyy-MM-dd HH:mm")}
         </p>
 
-        <form action="/product/delete-confirm/${product.id}" method="get">
-            <button type="submit">Delete product</button>
-        </form>
+        <#if user?? && user.id?? && product.user.id == user.id>
+
+            <p>
+                <a href="/product/edit/${product.id}">
+                    <button type="button">Edit product</button>
+                </a>
+            </p>
+
+            <p>
+                <a href="/product/delete-confirm/${product.id}">
+                    <button type="button">Delete product</button>
+                </a>
+            </p>
+
+        </#if>
 
     </#if>
 
