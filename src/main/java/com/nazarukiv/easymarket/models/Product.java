@@ -61,6 +61,9 @@ public class Product {
 
     private LocalDateTime dateCreated; //to know when specific product was created
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @PrePersist
     private  void init(){

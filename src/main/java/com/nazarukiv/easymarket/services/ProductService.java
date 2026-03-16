@@ -4,6 +4,7 @@ package com.nazarukiv.easymarket.services;
 import com.nazarukiv.easymarket.models.Image;
 import com.nazarukiv.easymarket.models.Product;
 import com.nazarukiv.easymarket.models.User;
+import com.nazarukiv.easymarket.repositories.CategoryRepository;
 import com.nazarukiv.easymarket.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,11 +26,13 @@ import org.springframework.data.domain.Pageable;
 public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
 
     public Page<Product> listProducts(String title,
                                       String city,
                                       Integer minPrice,
                                       Integer maxPrice,
+                                      Long categoryId,
                                       Pageable pageable){
 
         String searchTitle = title == null ? "" : title;
@@ -38,7 +41,7 @@ public class ProductService {
         int min = minPrice == null ? 0 : minPrice;
         int max = maxPrice == null ? Integer.MAX_VALUE : maxPrice;
 
-        return productRepository
+        Page<Product> productsPage = productRepository
                 .findByTitleContainingIgnoreCaseAndCityContainingIgnoreCaseAndPriceBetween(
                         searchTitle,
                         searchCity,
@@ -46,11 +49,36 @@ public class ProductService {
                         max,
                         pageable
                 );
+
+        if (categoryId != null) {
+            List<Product> filteredProducts = productsPage.getContent().stream()
+                    .filter(product -> product.getCategory() != null
+                            && product.getCategory().getId().equals(categoryId))
+                    .toList();
+
+            return new org.springframework.data.domain.PageImpl<>(
+                    filteredProducts,
+                    pageable,
+                    filteredProducts.size()
+            );
+        }
+
+        return productsPage;
     }
 
-    public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3)throws IOException
+    public void saveProduct(Principal principal,
+                            Product product,
+                            Long categoryId,
+                            MultipartFile file1,
+                            MultipartFile file2,
+                            MultipartFile file3) throws IOException
     {
         product.setUser(getUserByPrincipal(principal));
+
+        if (categoryId != null) {
+            product.setCategory(categoryRepository.findById(categoryId).orElse(null));
+        }
+
         Image image1;
         Image image2;
         Image image3;

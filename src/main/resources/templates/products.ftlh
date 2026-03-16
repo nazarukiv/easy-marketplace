@@ -56,6 +56,24 @@
             <input type="text" name="city" value="${city!}">
         </div>
 
+        <div class="field">
+            <span class="label">Category</span>
+
+            <select name="categoryId">
+
+                <option value="">All</option>
+
+                <#list categories as c>
+                    <option value="${c.id}"
+                            <#if categoryId?? && categoryId == c.id>selected</#if>>
+                        ${c.name}
+                    </option>
+                </#list>
+
+            </select>
+
+        </div>
+
         <input type="submit" value="Search">
 
     </form>
@@ -110,6 +128,10 @@
 
             <div class="meta">
                 <strong>Price</strong> £${product.price}
+            </div>
+
+            <div class="meta">
+                <strong>Category</strong> ${(product.category.name)!'No category'}
             </div>
 
             <div class="meta">
@@ -191,6 +213,21 @@
                 <div class="field">
                     <span class="label">Price</span>
                     <input type="number" name="price">
+                </div>
+
+                <div class="field">
+                    <span class="label">Category</span>
+
+                    <select name="categoryId">
+
+                        <#list categories as c>
+                            <option value="${c.id}">
+                                ${c.name}
+                            </option>
+                        </#list>
+
+                    </select>
+
                 </div>
 
                 <div class="field">

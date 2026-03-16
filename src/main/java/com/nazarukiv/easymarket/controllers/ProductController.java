@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import com.nazarukiv.easymarket.repositories.CategoryRepository;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -28,7 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
-
+    private final CategoryRepository categoryRepository;
 
     @GetMapping("/")
     public String products(@RequestParam(name = "title", required = false) String title,
@@ -37,6 +38,7 @@ public class ProductController {
                            @RequestParam(name = "sort", defaultValue = "dateCreated,desc") String sortField,
                            @RequestParam(name = "minPrice", required = false) Integer minPrice,
                            @RequestParam(name = "maxPrice", required = false) Integer maxPrice,
+                           @RequestParam(required = false) Long categoryId,
                            Principal principal,
                            Model model) {
 
@@ -67,7 +69,7 @@ public class ProductController {
 
         Pageable pageable = PageRequest.of(page, 3, sort);
         Page<Product> productPage =
-                productService.listProducts(title, city, minPrice, maxPrice, pageable);
+                productService.listProducts(title, city, minPrice, maxPrice, categoryId, pageable);
 
         model.addAttribute("products", productPage.getContent());
         model.addAttribute("currentPage", page);
@@ -78,6 +80,8 @@ public class ProductController {
         model.addAttribute("maxPrice", maxPrice);
         model.addAttribute("city", city);
         model.addAttribute("user", productService.getUserByPrincipal(principal));
+        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("categoryId", categoryId);
 
         return "products";
     }
@@ -93,6 +97,7 @@ public class ProductController {
     public String createProduct(@RequestParam("file1") MultipartFile file1,
                                 @RequestParam("file2") MultipartFile file2,
                                 @RequestParam("file3") MultipartFile file3,
+                                @RequestParam("categoryId") Long categoryId,
                                 @Valid Product product,
                                 BindingResult bindingResult,
                                 Principal principal,
@@ -104,7 +109,7 @@ public class ProductController {
             return "redirect:/";
         }
 
-        productService.saveProduct(principal, product, file1, file2, file3);
+        productService.saveProduct(principal, product, categoryId, file1, file2, file3);
         return "redirect:/";
     }
 
