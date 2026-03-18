@@ -15,6 +15,10 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
+@JsonIgnoreProperties({"user", "images"})
 @Entity
 @Table(name = "products")
 @Data
@@ -65,9 +69,12 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    private int views;
+
     @PrePersist
-    private  void init(){
+    private void init(){
         dateCreated = LocalDateTime.now();
+        views = 0;
     }
 
 

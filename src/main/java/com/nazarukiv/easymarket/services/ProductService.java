@@ -171,5 +171,20 @@ public class ProductService {
         }
     }
 
+    public void incrementViews(Long id) {
+
+        Product product = productRepository.findById(id).orElse(null);
+
+        if (product != null) {
+            product.setViews(product.getViews() + 1);
+            productRepository.save(product);
+        }
+    }
+
+
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
 
 }

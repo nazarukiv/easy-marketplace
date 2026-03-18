@@ -48,6 +48,10 @@
         </p>
 
         <p>
+            Views: ${product.views}
+        </p>
+
+        <p>
             City: ${product.city}
         </p>
 

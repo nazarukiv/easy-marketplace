@@ -88,8 +88,11 @@ public class ProductController {
 
     @GetMapping("/product/{id}")
     public String productInfo(@PathVariable Long id, Principal principal, Model model){
+        productService.incrementViews(id);
+
         model.addAttribute("product", productService.getProductById(id));
         model.addAttribute("user", productService.getUserByPrincipal(principal));
+
         return "product-info";
     }
 
