@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -22,8 +23,9 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
 
+    @NotBlank
     @Column(name = "email", unique = true)
-    private String email; //will be same as username
+    private String email;
 
     @Column(name = "phoneNumber")
     private String phoneNumber;
@@ -39,7 +41,8 @@ public class User implements UserDetails {
     @JoinColumn(name = "image_id")
     private Image avatar;
 
-    @Column(name = "password", length = 1000)
+    @NotBlank
+    @Column(name = "password")
     private String password;
 
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)

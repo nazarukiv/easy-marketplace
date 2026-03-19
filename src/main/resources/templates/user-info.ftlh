@@ -18,6 +18,10 @@
 
     <h3>User profile</h3>
 
+    <#if user.avatar??>
+        <img src="/images/${user.avatar.id}" style="max-width:150px;">
+    </#if>
+
     <div class="meta">
         <strong>Name</strong> ${user.name}
     </div>

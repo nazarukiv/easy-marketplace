@@ -6,6 +6,7 @@ import com.nazarukiv.easymarket.models.Product;
 import com.nazarukiv.easymarket.models.User;
 import com.nazarukiv.easymarket.repositories.CategoryRepository;
 import com.nazarukiv.easymarket.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -51,16 +52,15 @@ public class ProductService {
                 );
 
         if (categoryId != null) {
-            List<Product> filteredProducts = productsPage.getContent().stream()
-                    .filter(product -> product.getCategory() != null
-                            && product.getCategory().getId().equals(categoryId))
-                    .toList();
-
-            return new org.springframework.data.domain.PageImpl<>(
-                    filteredProducts,
-                    pageable,
-                    filteredProducts.size()
-            );
+            return productRepository
+                    .findByCategoryIdAndTitleContainingIgnoreCaseAndCityContainingIgnoreCaseAndPriceBetween(
+                            categoryId,
+                            searchTitle,
+                            searchCity,
+                            min,
+                            max,
+                            pageable
+                    );
         }
 
         return productsPage;
@@ -171,19 +171,23 @@ public class ProductService {
         }
     }
 
+    @Transactional
     public void incrementViews(Long id) {
 
         Product product = productRepository.findById(id).orElse(null);
 
         if (product != null) {
-            product.setViews(product.getViews() + 1);
-            productRepository.save(product);
+            productRepository.incrementViews(id);
         }
     }
 
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
+    }
+
+    public Page<Product> getProductsPage(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 
 

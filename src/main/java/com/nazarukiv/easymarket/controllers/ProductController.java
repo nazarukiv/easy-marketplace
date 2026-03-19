@@ -119,8 +119,6 @@ public class ProductController {
     @PostMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable Long id, Principal principal){
 
-        System.out.println("DELETE CLICKED ID = " + id);
-
         if(productService.isProductOwner(id, principal)){
             productService.deleteProduct(id);
         }

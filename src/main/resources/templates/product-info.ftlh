@@ -48,6 +48,10 @@
         </p>
 
         <p>
+            Category: ${(product.category.name)!'No category'}
+        </p>
+
+        <p>
             Views: ${product.views}
         </p>
 

@@ -3,6 +3,8 @@ package com.nazarukiv.easymarket.controllers;
 import com.nazarukiv.easymarket.models.Product;
 import com.nazarukiv.easymarket.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +18,8 @@ public class ProductRestController {
 
     //GET all products
     @GetMapping
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public Page<Product> getAllProducts(Pageable pageable) {
+        return productService.getProductsPage(pageable);
     }
 
     //GET one product
