@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     public boolean createUser(User user){
         String email = user.getEmail();
@@ -30,6 +31,13 @@ public class UserService {
         user.getRoles().add(Roles.ROLE_USER);
         log.info("user was successfully registered with email: {}", email);
         userRepository.save(user);
+
+        emailService.sendEmail(
+                user.getEmail(),
+                "Welcome to EasyMarket",
+                "Your account was created successfully"
+        );
+
         return true;
     }
 
