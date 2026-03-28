@@ -24,6 +24,9 @@ import org.springframework.data.domain.Sort;
 import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.server.ResponseStatusException;
+
+import org.springframework.http.HttpStatus;
 
 @Controller
 @RequiredArgsConstructor
@@ -90,7 +93,12 @@ public class ProductController {
     public String productInfo(@PathVariable Long id, Principal principal, Model model){
         productService.incrementViews(id);
 
-        model.addAttribute("product", productService.getProductById(id));
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+        }
+
+        model.addAttribute("product", product);
         model.addAttribute("user", productService.getUserByPrincipal(principal));
 
         return "product-info";
@@ -124,6 +132,21 @@ public class ProductController {
         }
 
         return "redirect:/";
+    }
+
+    @GetMapping("/product/delete-confirm/{id}")
+    public String deleteProductConfirm(@PathVariable Long id, Principal principal, Model model) {
+        if (!productService.isProductOwner(id, principal)) {
+            return "redirect:/";
+        }
+
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+        }
+
+        model.addAttribute("product", product);
+        return "delete-confirm";
     }
 
     @GetMapping("/product/edit/{id}")

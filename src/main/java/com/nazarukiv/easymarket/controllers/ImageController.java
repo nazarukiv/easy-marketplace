@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import org.springframework.http.HttpStatus;
 
 import java.io.ByteArrayInputStream;
 
@@ -19,7 +22,8 @@ public class ImageController {
 
     @GetMapping("/images/{id}")
     private ResponseEntity<?> getImageById(@PathVariable Long id) {
-        Image image = imageRepository.findById(id).orElseThrow();
+        Image image = imageRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Image not found"));
 
         return ResponseEntity.ok()
                 .header("fileName", image.getOriginalFileName())

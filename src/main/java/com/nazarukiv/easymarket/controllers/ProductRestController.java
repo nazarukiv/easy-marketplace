@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -25,6 +28,10 @@ public class ProductRestController {
     //GET one product
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable Long id) {
-        return productService.getProductById(id);
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+        }
+        return product;
     }
 }
