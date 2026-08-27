@@ -38,5 +38,4 @@ out/
 *.log
 .env
 .env.*
-application-local.properties
-application.properties
+!.env.example

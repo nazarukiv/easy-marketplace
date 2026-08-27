@@ -1,0 +1,13 @@
+.git
+.github
+.idea
+.mvn/wrapper/maven-wrapper.jar
+target
+out
+build
+*.iml
+*.log
+.DS_Store
+.env
+.env.*
+!/.env.example

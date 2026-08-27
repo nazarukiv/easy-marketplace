@@ -1,6 +1,7 @@
 package com.nazarukiv.easymarket.services;
 
 import com.nazarukiv.easymarket.models.Product;
+import com.nazarukiv.easymarket.repositories.CategoryRepository;
 import com.nazarukiv.easymarket.repositories.ProductRepository;
 import com.nazarukiv.easymarket.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -16,8 +17,9 @@ public class ProductServiceTest {
     void getProductById_returnsProduct() {
         ProductRepository productRepository = mock(ProductRepository.class);
         UserRepository userRepository = mock(UserRepository.class);
+        CategoryRepository categoryRepository = mock(CategoryRepository.class);
 
-        ProductService productService = new ProductService(productRepository, userRepository);
+        ProductService productService = new ProductService(productRepository, userRepository, categoryRepository);
 
         Product product = new Product();
         product.setId(1L);
